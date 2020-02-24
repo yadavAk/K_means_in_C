@@ -1,0 +1,59 @@
+NOTE:- INPUT & OUTPUT FORMAT AND OTHER NECESSARY INSTRUCTIONS FOR RUNNIG THE PROGRAM ARE GIVEN IN README FILE.
+
+Problem 1:- The task is to write a program, which can predict if a SMS is spam or not.
+
+LOGIC of the Code:-  	Using functions functions we can solve our problem.
+			Levenshtein_Distance():- This function takes two aruguments which are character strings and returns a
+			positive number which is the number of deletions, insertions, or substitutions required to transform first string
+			into second string. This function also call min() function to complete the task.
+
+			min():- This function takes three positive integers (arguments) and returns a minimum integer among them. This function
+			helps in computing Levenshtein Distance.
+
+			After this, a structure is defined whihc is linded list to store the words of train file.
+
+			insert():- This is simple function to create and link new nodes in linked list. Its one arguments is address of
+			character string and other is address of head node of linked list. And this function returns nothing(return type void).
+
+			return_rep_word():- This function returns random representative words. It takes two arguments one is address stored in
+			head node and another is randomly calculated integer and it returns jth word. This jth word will be random representative
+			word.
+
+			ComputeKMeans():- This function takes three aruguments, first argument is address stored in head node of first cluster
+			(Actually there is a array of structure and one structure is for one cluster), second arguent is address stored in head
+			node of original cluster(in this list, all the words of train file is present), third argument is positive integer which
+			is no. of clusters user want to make.
+				This function performs lots of calculation and it take few seconds to complete its all the operations. This fuction also
+			call Levenshtein_Distance(), insert() and free() functions to finish its purpose.
+				ComputeKMeans() also find the actual/means representative strings. We can easily observe that after iterating the loop 3 or 4
+			times we can get actual/mean representative strings so I ran the loop only 6 times. It is observed that they successfully
+			calculated the mean representative strings by doing the above process.
+				Finally ComputeKMeans() returns address of actual/mean representative strings along with their clusters.
+
+			ComputeHistogram():- This function also takes three arguments, first and third are same as they are in ComputeKMeans(),
+			second argument is passing of character array which is sms of train file. With the help of Levenshtein_Distance() function, this 
+			function calculates the sum of Levenshtein distances of first representative word from all other words of sms. This sum
+			will be stored in first block of integer array(allocated dynamically). Similarly the function will calculate the sum of 
+			Levenshtein distances of second	representative word from all other word of message and so on the process will go till the end of 
+			all the representative words. By doing all the calculation we will get a 1-D array and we will pass this array to main function.
+
+			In main function I already created a pointer array of size 542( = no. of train message) and name Histogram_train_array,
+			all the arrays passed by ComputeHistogram() function will be pointed to Histogram_train_array one by one. Finally I will
+			have Histogram 2-D array(rows will be no. of sms and columns will be no. of clusters)
+
+			ComputeL1distance():- This function also have three arguments, first argument is address address of ith row of Histogram_train_array,
+			second argument is address of Histogram_test_array(this is 1-D array and it is also calculated similar to Histogram_train_array), and
+			third argument is no. of clusters.
+				This function returns a positive integer which is sum of difference between elements of ith Histogram_train_array and
+			Histogram_test_array.
+				The logic behind calling this function is to find out that the sms extracted from test file is nearest to which
+			train message. If, for example, suppose Histgram_test_array of some 'x' test message is found nearest to ith Histogram_train_array.
+			Now if ith message in train file is spam then the 'x' test message is also a spam otherwise vice versa.
+
+			Logic Behind "Actually Checking" whether a message is "Actually Spam or Ham" is that if the third last character of target sms
+			is 'p' then the sms is spam(notice 'p' in spam) and if third last character is 'h' then the sms is ham or legitimate.
+
+			Calculation of percentage accuracy:- (no. of spam messages detected correctly + no. of ham messages detected correctly) divided by
+			(no. of total messages in train file).
+
+***************************************************************************************************************************************************************
